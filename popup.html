@@ -7,6 +7,28 @@
   <title>Premium SF Seetings</title>
 </head>
 <body>
+<div class="container">
+    <h3>Rates & Reviews</h3>
+
+    <div class="row">
+      <label for="vendorReviewSelect">Vendor Review</label>
+      <select id="vendorReviewSelect">
+        <option value="hide">Hide</option>
+        <option value="blur">Blur</option>
+        <option value="none">Show</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="vendorRateSelect">Vendor Rate</label>
+      <select id="vendorRateSelect">
+        <option value="hide">Hide</option>
+        <option value="blur">Blur</option>
+        <option value="none">Show</option>
+      </select>
+    </div>
+
+  </div>
   <div class="container">
     <h3>Ads Control</h3>
 
@@ -15,7 +37,7 @@
       <select id="vendorSelect">
         <option value="hide">Hide</option>
         <option value="blur">Blur</option>
-        <option value="none">None</option>
+        <option value="none">Show</option>
       </select>
     </div>
 
@@ -24,7 +46,7 @@
       <select id="productSelect">
         <option value="hide">Hide</option>
         <option value="blur">Blur</option>
-        <option value="none">None</option>
+        <option value="none">Show</option>
       </select>
     </div>
 
@@ -33,7 +55,7 @@
       <select id="bannerSelect">
         <option value="hide">Hide</option>
         <option value="blur">Blur</option>
-        <option value="none">None</option>
+        <option value="none">Show</option>
       </select>
     </div>
 
@@ -42,12 +64,12 @@
       <select id="svgSelect">
         <option value="hide">Hide</option>
         <option value="blur">Blur</option>
-        <option value="none">None</option>
+        <option value="none">Show</option>
       </select>
     </div>
 
-    <div class="note">All settings will seved in chrome sync.</div>
   </div>
+  <div class="note">All settings will seved in chrome sync.</div>
 
   <script src="popup.js"></script>
 </body>

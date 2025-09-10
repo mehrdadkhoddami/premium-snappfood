@@ -8,13 +8,18 @@
   const CHECKED_FLAG = 'data-premium-sf-checked';
   const APPLIED_ACTION = 'data-premium-sf-action';
   const SVG_AD_PATH_SNIPPET = 'M19 11.5v3.742';
+  
+  const VENDOR_REVIEW_COUNT = '.score-label__counter';
+  const VENDOR_RATE = '.score-label__rate';
 
   // default actions
   let actions = {
-    vendor: 'hide',   // 'hide' | 'blur' | 'none'
-    product: 'hide',
-    banner: 'hide',
-    svg: 'hide'
+    vendor: 'blur',   // 'hide' | 'blur' | 'none'
+    product: 'blur',
+    banner: 'blur',
+    svg: 'blur',
+	vendorRate: 'hide',
+	vendorReview: 'hide'
   };
 
   // load settings from storage
@@ -23,8 +28,8 @@
       if (cb) cb();
       return;
     }
-    chrome.storage.sync.get({ adActions: actions }, data => {
-      actions = Object.assign(actions, data.adActions || {});
+    chrome.storage.sync.get({ premiumSFActions: actions }, data => {
+      actions = Object.assign(actions, data.premiumSFActions || {});
       if (cb) cb();
     });
   }
@@ -70,6 +75,24 @@
 
     // vendor direct match
     if (node.matches && node.matches(SELECTOR_VENDOR)) {
+	  const reviewNode = node.querySelector(VENDOR_REVIEW_COUNT);
+	  const rateNode = node.querySelector(VENDOR_RATE);
+	  if (reviewNode !== null) {
+          applyAction(reviewNode, actions.vendorReview || 'hide');
+	  } else {
+          // mark as checked to avoid reprocessing repeatedly
+          mark(reviewNode);
+	  }
+		
+	  if (rateNode !== null) {
+          applyAction(rateNode, actions.vendorRate || 'hide');
+		  const svgNode = rateNode.parentElement.parentElement.querySelector('svg');
+          applyAction(svgNode, actions.vendorRate || 'hide');
+
+	  } else {
+          // mark as checked to avoid reprocessing repeatedly
+          mark(rateNode);
+	  }
       if (!node.hasAttribute(CHECKED_FLAG)) {
         const isMarked = node.querySelector(AD_MARKER_SELECTOR) !== null;
         const hasSvgAd = Array.from(node.querySelectorAll('svg')).some(svgIsAd);
@@ -207,8 +230,8 @@
   // storage change listener to update actions dynamically
   if (typeof chrome !== 'undefined' && chrome.storage && chrome.storage.onChanged) {
     chrome.storage.onChanged.addListener((changes, area) => {
-      if (area === 'sync' && changes.adActions) {
-        actions = Object.assign(actions, changes.adActions.newValue || {});
+      if (area === 'sync' && changes.premiumSFActions) {
+        actions = Object.assign(actions, changes.premiumSFActions.newValue || {});
         // reapply in idle
         idle(reapplyAll);
       }

@@ -1,5 +1,7 @@
 // popup script - load and save ad action settings
 const defaultActions = {
+  vendorRate: 'hide',
+  vendorReview: 'hide',
   vendor: 'blur',
   product: 'blur',
   banner: 'blur',
@@ -13,8 +15,10 @@ function load() {
     applyDefaults();
     return;
   }
-  chrome.storage.sync.get({ adActions: defaultActions }, data => {
-    const a = data.adActions || defaultActions;
+  chrome.storage.sync.get({ premiumSFActions: defaultActions }, data => {
+    const a = data.premiumSFActions || defaultActions;
+    $('vendorRateSelect').value = a.vendorRate || defaultActions.vendorRate;
+    $('vendorReviewSelect').value = a.vendorReview || defaultActions.vendorReview;
     $('vendorSelect').value = a.vendor || defaultActions.vendor;
     $('productSelect').value = a.product || defaultActions.product;
     $('bannerSelect').value = a.banner || defaultActions.banner;
@@ -24,17 +28,21 @@ function load() {
 
 function save() {
   const a = {
+    vendorRate: $('vendorRateSelect').value,
+    vendorReview: $('vendorReviewSelect').value,
     vendor: $('vendorSelect').value,
     product: $('productSelect').value,
     banner: $('bannerSelect').value,
     svg: $('svgSelect').value
   };
   if (!chrome || !chrome.storage) return;
-  chrome.storage.sync.set({ adActions: a });
+  chrome.storage.sync.set({ premiumSFActions: a });
 }
 
 // set defaults if storage unavailable
 function applyDefaults() {
+  $('vendorRateSelect').value = defaultActions.vendorRate;
+  $('vendorReviewSelect').value = defaultActions.vendorReview;
   $('vendorSelect').value = defaultActions.vendor;
   $('productSelect').value = defaultActions.product;
   $('bannerSelect').value = defaultActions.banner;
@@ -43,7 +51,7 @@ function applyDefaults() {
 
 document.addEventListener('DOMContentLoaded', () => {
   load();
-  ['vendorSelect','productSelect','bannerSelect','svgSelect'].forEach(id => {
+  ['vendorRateSelect','vendorReviewSelect','vendorSelect','productSelect','bannerSelect','svgSelect'].forEach(id => {
     const el = $(id);
     el.addEventListener('change', () => {
       save();
