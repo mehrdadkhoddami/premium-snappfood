@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="fa">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <link rel="stylesheet" href="popup.css">
+  <title>Ads Control</title>
+</head>
+<body>
+  <div class="container">
+    <h3>کنترل تبلیغات</h3>
+
+    <div class="row">
+      <label for="vendorSelect">Vendor ads</label>
+      <select id="vendorSelect">
+        <option value="hide">Hide</option>
+        <option value="blur">Blur</option>
+        <option value="none">None</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="productSelect">Product ads</label>
+      <select id="productSelect">
+        <option value="hide">Hide</option>
+        <option value="blur">Blur</option>
+        <option value="none">None</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="bannerSelect">Banner ads</label>
+      <select id="bannerSelect">
+        <option value="hide">Hide</option>
+        <option value="blur">Blur</option>
+        <option value="none">None</option>
+      </select>
+    </div>
+
+    <div class="row">
+      <label for="svgSelect">Standalone ad icons</label>
+      <select id="svgSelect">
+        <option value="hide">Hide</option>
+        <option value="blur">Blur</option>
+        <option value="none">None</option>
+      </select>
+    </div>
+
+    <div class="note">تنظیمات در chrome sync ذخیره می‌شود.</div>
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

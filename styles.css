@@ -1,8 +1,14 @@
 .sf-hidden-by-ext {
-  //display: none !important;
-  filter: blur(5px);
-  pointer-events: none;
+  display: none !important;
 }
+
+.sf-blur-by-ext {
+  filter: blur(5px) !important;
+  pointer-events: none !important;
+  user-select: none !important;
+}
+
+/* small helper for popup preview if needed */
 .sf-marked {
   outline: none;
 }
