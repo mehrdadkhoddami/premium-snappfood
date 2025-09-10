@@ -1,9 +1,9 @@
 // popup script - load and save ad action settings
 const defaultActions = {
-  vendor: 'hide',
-  product: 'hide',
-  banner: 'hide',
-  svg: 'hide'
+  vendor: 'blur',
+  product: 'blur',
+  banner: 'blur',
+  svg: 'blur'
 };
 
 function $(id) { return document.getElementById(id); }
