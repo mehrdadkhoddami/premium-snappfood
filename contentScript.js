@@ -1,6 +1,6 @@
 // content script for snappfood.ir - supports user actions (hide/blur/none) from popup
 (() => {
-  const SELECTOR_VENDOR = 'a#vendorCard, a[data-sentry-component="VendorCard"]';
+  const SELECTOR_VENDOR = 'a#vendorCard, a[data-sentry-component="VendorCard"], a[data-sentry-component="VendorCardCarousel"]';
   const SELECTOR_PRODUCT = '[data-sentry-component="HorizontalProductCard"]';
   const SELECTOR_PRODUCT_WRAPPER = '#search-vendor-product[data-sentry-component="HorizontalProductCard"]';
   const SELECTOR_BANNER = '[data-sentry-component="Banner"]';
@@ -11,6 +11,8 @@
   
   const VENDOR_REVIEW_COUNT = '.score-label__counter';
   const VENDOR_RATE = '.score-label__rate';
+  
+  const SELECTOR_TOP_BADGE = '.label--square.label--general';
 
   // default actions
   let actions = {
@@ -19,7 +21,8 @@
     banner: 'blur',
     svg: 'blur',
 	vendorRate: 'hide',
-	vendorReview: 'hide'
+	vendorReview: 'hide',
+	vendorTopRightBadge: 'transparent'
   };
 
   // load settings from storage
@@ -50,9 +53,10 @@
       return;
     }
     // remove previous classes
-    el.classList.remove('sf-hidden-by-ext', 'sf-blur-by-ext');
+    el.classList.remove('sf-hidden-by-ext', 'sf-blur-by-ext', 'sf-transparent-by-ext');
     if (type === 'hide') el.classList.add('sf-hidden-by-ext');
     else if (type === 'blur') el.classList.add('sf-blur-by-ext');
+    else if (type === 'transparent') el.classList.add('sf-transparent-by-ext');
     // write applied action and checked flag
     el.setAttribute(APPLIED_ACTION, type);
     el.setAttribute(CHECKED_FLAG, '1');
@@ -77,6 +81,7 @@
     if (node.matches && node.matches(SELECTOR_VENDOR)) {
 	  const reviewNode = node.querySelector(VENDOR_REVIEW_COUNT);
 	  const rateNode = node.querySelector(VENDOR_RATE);
+	  const topRightBadge = node.querySelector(SELECTOR_TOP_BADGE);
 	  if (reviewNode !== null) {
           applyAction(reviewNode, actions.vendorReview || 'hide');
 	  } else {
@@ -93,6 +98,14 @@
           // mark as checked to avoid reprocessing repeatedly
           mark(rateNode);
 	  }
+	  
+	  if (topRightBadge !== null) {
+          applyAction(topRightBadge, actions.vendorTopRightBadge || 'transparent');
+	  } else {
+          // mark as checked to avoid reprocessing repeatedly
+          mark(topRightBadge);
+	  }
+	  
       if (!node.hasAttribute(CHECKED_FLAG)) {
         const isMarked = node.querySelector(AD_MARKER_SELECTOR) !== null;
         const hasSvgAd = Array.from(node.querySelectorAll('svg')).some(svgIsAd);

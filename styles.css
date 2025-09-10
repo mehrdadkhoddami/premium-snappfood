@@ -8,10 +8,15 @@
   user-select: none !important;
 }
 
+.sf-transparent-by-ext {
+	opacity: 0 !important;
+}
+
 /* small helper for popup preview if needed */
 .sf-marked {
   outline: none;
 }
+
 
 body {
 	background-color: #fbfbfb

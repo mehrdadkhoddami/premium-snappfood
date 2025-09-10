@@ -2,6 +2,7 @@
 const defaultActions = {
   vendorRate: 'hide',
   vendorReview: 'hide',
+  vendorTopRightBadge: 'transparent',
   vendor: 'blur',
   product: 'blur',
   banner: 'blur',
@@ -19,6 +20,7 @@ function load() {
     const a = data.premiumSFActions || defaultActions;
     $('vendorRateSelect').value = a.vendorRate || defaultActions.vendorRate;
     $('vendorReviewSelect').value = a.vendorReview || defaultActions.vendorReview;
+    $('vendorTopRightBadge').value = a.vendorTopRightBadge || defaultActions.vendorTopRightBadge;
     $('vendorSelect').value = a.vendor || defaultActions.vendor;
     $('productSelect').value = a.product || defaultActions.product;
     $('bannerSelect').value = a.banner || defaultActions.banner;
@@ -30,6 +32,7 @@ function save() {
   const a = {
     vendorRate: $('vendorRateSelect').value,
     vendorReview: $('vendorReviewSelect').value,
+    vendorTopRightBadge: $('vendorTopRightBadgeSelect').value,
     vendor: $('vendorSelect').value,
     product: $('productSelect').value,
     banner: $('bannerSelect').value,
@@ -43,6 +46,7 @@ function save() {
 function applyDefaults() {
   $('vendorRateSelect').value = defaultActions.vendorRate;
   $('vendorReviewSelect').value = defaultActions.vendorReview;
+  $('vendorTopRightBadgeSelect').value = defaultActions.vendorTopRightBadge;
   $('vendorSelect').value = defaultActions.vendor;
   $('productSelect').value = defaultActions.product;
   $('bannerSelect').value = defaultActions.banner;
@@ -51,7 +55,7 @@ function applyDefaults() {
 
 document.addEventListener('DOMContentLoaded', () => {
   load();
-  ['vendorRateSelect','vendorReviewSelect','vendorSelect','productSelect','bannerSelect','svgSelect'].forEach(id => {
+  ['vendorRateSelect','vendorReviewSelect','vendorTopRightBadgeSelect','vendorSelect','productSelect','bannerSelect','svgSelect'].forEach(id => {
     const el = $(id);
     el.addEventListener('change', () => {
       save();
